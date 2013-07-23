@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="cross.svg">
+  <defs
+     id="defs4">
+    <filter
+       id="filter3874"
+       inkscape:label="Evanescent"
+       inkscape:menu="Blurs"
+       inkscape:menu-tooltip="Blur the contents of objects, preserving the outline and adding progressive transparency at edges"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3876"
+         result="result6"
+         stdDeviation="3"
+         in="SourceGraphic" />
+      <feColorMatrix
+         id="feColorMatrix3878"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 "
+         result="result7"
+         in="SourceGraphic" />
+      <feComposite
+         id="feComposite3880"
+         in2="result7"
+         operator="in"
+         in="result6" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="320.5511"
+     inkscape:cy="836.70182"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1007"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="-201.02036,999.04087"
+       id="guide3007" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-349.51278,701.04587"
+       id="guide3014" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-190.91883,850.04337"
+       id="guide3016" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="314.15744,929.84542"
+       id="guide3036" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="150.35714,973.57143"
+       id="guide3038" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid3059" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:#223783;fill-opacity:0.38755984;stroke:#000000;stroke-width:0.18356384;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;filter:url(#filter3874)"
+       d="m 331.88745,36.467293 c -3.70752,0 -6.6875,2.979983 -6.6875,6.6875 l 0,135.656237 -136.68749,0 c -3.70752,0 -6.6875,3.01123 -6.6875,6.71875 0,3.70752 2.97998,6.6875 6.6875,6.6875 l 136.68749,0 0,135.5625 c 0,3.70752 2.97998,6.6875 6.6875,6.6875 3.70752,0 6.6875,-2.97998 6.6875,-6.6875 l 0,-135.5625 134.53125,0 c 3.70752,0 6.71875,-2.97998 6.71875,-6.6875 0,-3.70752 -3.01123,-6.71875 -6.71875,-6.71875 l -134.53125,0 0,-135.656237 c 0,-3.707517 -2.97998,-6.6875 -6.6875,-6.6875 z"
+       id="rect2985-2"
+       inkscape:export-filename="/home/javi/Dropbox/uni/src/pygame/imgs/cross.png"
+       inkscape:export-xdpi="240.13289"
+       inkscape:export-ydpi="240.13289" />
+    <path
+       style="fill:#0000ff;fill-opacity:1;stroke:#000000;stroke-width:0.18356384;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       d="M 314.53125 53.3125 C 310.82373 53.3125 307.84375 56.292483 307.84375 60 L 307.84375 195.65625 L 171.15625 195.65625 C 167.44873 195.65625 164.46875 198.66748 164.46875 202.375 C 164.46875 206.08252 167.44873 209.0625 171.15625 209.0625 L 307.84375 209.0625 L 307.84375 344.625 C 307.84375 348.33252 310.82373 351.3125 314.53125 351.3125 C 318.23877 351.3125 321.21875 348.33252 321.21875 344.625 L 321.21875 209.0625 L 455.75 209.0625 C 459.45752 209.0625 462.46875 206.08252 462.46875 202.375 C 462.46875 198.66748 459.45752 195.65625 455.75 195.65625 L 321.21875 195.65625 L 321.21875 60 C 321.21875 56.292483 318.23877 53.3125 314.53125 53.3125 z "
+       id="rect2985" />
+  </g>
+</svg>
