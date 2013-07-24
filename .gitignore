@@ -41,3 +41,5 @@ nosetests.xml
 #Vim
 .sw*
 *un~
+#bcifwk
+bcifwk
