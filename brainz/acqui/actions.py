@@ -9,7 +9,7 @@ class BackgroundAction ( Action ):
 
 	def onUpdate(self):
 	    	self.screen.fill(self.color)
-	
+
 class CrossAction (Action):
 	def __init__(self,imgpath,screen):
 		self.img=pygame.image.load(imgpath).convert_alpha()
@@ -18,11 +18,11 @@ class CrossAction (Action):
 		self.rect.center=screen.get_rect().center
 
 	def onUpdate(self):
-		self.screen.blit(self.img,self.rect)	
+		self.screen.blit(self.img,self.rect)
 
 class SoundAction(Action):
 	def __init__(self,sndfile):
-			
+
 		self.logger = logging.getLogger("logger")
 		self.snd=pygame.mixer.Sound(sndfile)
 	def onStart(self):
@@ -31,7 +31,7 @@ class SoundAction(Action):
 	def onStop(self):
 		self.logger.debug("play start!")
 		self.snd.play()
-		self.logger.debug("play stop!")		
+		self.logger.debug("play stop!")
 		pass
 
 class MessageAction(Action):
@@ -51,16 +51,16 @@ class MessageAction(Action):
 class DataWriteStartAction(Action):
 	"""docstring for DataDumpAction"""
 	def __init__(self,writer):
-		self.writer=writer	
-	
+		self.writer=writer
+
 	def onStart(self ):
 		self.writer.startWriting()
 
 class DataWriteStopAction(Action):
 	"""docstring for DataDumpAction"""
 	def __init__(self,writer,classPool):
-		self.writer=writer	
+		self.writer=writer
 		self.classPool=classPool
-	
+
 	def onStop(self):
 		self.writer.stopWriting(self.classPool.current().clazz.orientation)

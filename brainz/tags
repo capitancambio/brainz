@@ -4,14 +4,20 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+ADD_DATA	matlab.py	/^    ADD_DATA="brainz.addData(data);clear data;"$/;"	v	class:BCIConn
 AcquiLauncher	acqui/launcher.py	/^class AcquiLauncher(threading.Thread):$/;"	c
 AcquiLauncher	dataShower.py	/^from acqui.launcher import AcquiLauncher$/;"	i
 Action	acqui/actions.py	/^from acqui.tasks import Action$/;"	i
 Action	acqui/clazz.py	/^from acqui.tasks import Action$/;"	i
-Action	acqui/tasks.py	/^class Action:$/;"	c
+Action	acqui/tasks.py	/^                    class Action:$/;"	c	function:Task.update.reset
 AnonymousThread	data/bus.py	/^class AnonymousThread(threading.Thread):$/;"	c
 AnonymousThread	data/writer.py	/^class AnonymousThread(threading.Thread):$/;"	c
+BCIConn	brainz.py	/^from matlab import BCIConn, BCIConnDataBuffer$/;"	i
+BCIConn	matlab.py	/^class BCIConn(object):$/;"	c
+BCIConnDataBuffer	brainz.py	/^from matlab import BCIConn, BCIConnDataBuffer$/;"	i
+BCIConnDataBuffer	matlab.py	/^class BCIConnDataBuffer():$/;"	c
 BackgroundAction	acqui/actions.py	/^class BackgroundAction ( Action ):$/;"	c
+BiosemiClient	brainz.py	/^from conn.biosemi import BiosemiClient, DataPoster, DataBuilder$/;"	i
 BiosemiClient	conn/biosemi.py	/^class BiosemiClient(object):$/;"	c
 BiosemiClient	dataShower.py	/^from conn.biosemi import BiosemiClient, DataPoster, DataBuilder$/;"	i
 BoundControlBox	plotting/example.py	/^class BoundControlBox(wx.Panel):$/;"	c
@@ -22,7 +28,9 @@ Clazz	acqui/clazz.py	/^class Clazz(yaml.YAMLObject):$/;"	c
 ClazzPainter	acqui/clazz.py	/^class ClazzPainter:$/;"	c
 CrossAction	acqui/actions.py	/^class CrossAction (Action):$/;"	c
 DONE	data/writer.py	/^	DONE=2$/;"	v	class:DataWriter
+DONE	matlab.py	/^    DONE=2$/;"	v	class:BCIConnDataBuffer
 DOWN	acqui/clazz.py	/^	DOWN=3$/;"	v	class:Clazz
+DataAppender	brainz.py	/^from data.writer import DataWriter, DataPath, DataAppender$/;"	i
 DataAppender	data/writer.py	/^class DataAppender(object):$/;"	c
 DataAppender	dataShower.py	/^from data.writer import DataWriter, DataPath, DataAppender$/;"	i
 DataBuffer	data/DataBufferTest.py	/^from data.bus import DataBuffer,DataChunk$/;"	i
@@ -30,44 +38,56 @@ DataBuffer	data/bus.py	/^class DataBuffer(object):$/;"	c
 DataBuffer	dataShower.py	/^from data.bus import DataBus, DataBuffer$/;"	i
 DataBufferTest	data/DataBufferTest.py	/^class DataBufferTest(unittest.TestCase):$/;"	c
 DataBufferTest	testRunner.py	/^import data.DataBufferTest$/;"	i
+DataBuilder	brainz.py	/^from conn.biosemi import BiosemiClient, DataPoster, DataBuilder$/;"	i
 DataBuilder	conn/biosemi.py	/^class DataBuilder(object):$/;"	c
 DataBuilder	dataShower.py	/^from conn.biosemi import BiosemiClient, DataPoster, DataBuilder$/;"	i
+DataBus	brainz.py	/^from data.bus import DataBus$/;"	i
 DataBus	data/bus.py	/^class DataBus(object):$/;"	c
 DataBus	dataShower.py	/^from data.bus import DataBus, DataBuffer$/;"	i
 DataChunk	conn/biosemi.py	/^from data.bus import DataChunk$/;"	i
 DataChunk	data/DataBufferTest.py	/^from data.bus import DataBuffer,DataChunk$/;"	i
 DataChunk	data/bus.py	/^class DataChunk(object):$/;"	c
 DataGen	plotting/example.py	/^class DataGen(object):$/;"	c
+DataPath	brainz.py	/^from data.writer import DataWriter, DataPath, DataAppender$/;"	i
 DataPath	data/DataWriterTest.py	/^from data.writer import DataPath$/;"	i
 DataPath	data/writer.py	/^class DataPath(object):$/;"	c
 DataPath	dataShower.py	/^from data.writer import DataWriter, DataPath, DataAppender$/;"	i
 DataPlotter	plotting/data_plotter.py	/^class DataPlotter(threading.Thread):$/;"	c
+DataPoster	brainz.py	/^from conn.biosemi import BiosemiClient, DataPoster, DataBuilder$/;"	i
 DataPoster	conn/biosemi.py	/^class DataPoster(threading.Thread):$/;"	c
 DataPoster	dataShower.py	/^from conn.biosemi import BiosemiClient, DataPoster, DataBuilder$/;"	i
 DataWriteStartAction	acqui/actions.py	/^class DataWriteStartAction(Action):$/;"	c
 DataWriteStopAction	acqui/actions.py	/^class DataWriteStopAction(Action):$/;"	c
+DataWriter	brainz.py	/^from data.writer import DataWriter, DataPath, DataAppender$/;"	i
 DataWriter	data/writer.py	/^class DataWriter(object):$/;"	c
 DataWriter	dataShower.py	/^from data.writer import DataWriter, DataPath, DataAppender$/;"	i
+DataWriter	matlab.py	/^from data.writer import DataWriter$/;"	i
 DataWriterTest	data/DataWriterTest.py	/^class DataWriterTest(unittest.TestCase):$/;"	c
 DataWriterTest	testRunner.py	/^import data.DataWriterTest$/;"	i
 DurationProvider	acqui/launcher.py	/^class DurationProvider(object):$/;"	c
+END_TRIAL	matlab.py	/^    END_TRIAL="brainz.endTrial()"$/;"	v	class:BCIConn
 FigCanvas	plotting/data_plotter.py	/^    FigureCanvasWxAgg as FigCanvas$/;"	i
 FigCanvas	plotting/example.py	/^    NavigationToolbar2WxAgg as NavigationToolbar$/;"	i
 Figure	plotting/data_plotter.py	/^from matplotlib.figure import Figure$/;"	i
 Figure	plotting/example.py	/^from matplotlib.figure import Figure$/;"	i
 GATHERING	data/writer.py	/^	GATHERING=1$/;"	v	class:DataWriter
+GATHERING	matlab.py	/^    GATHERING=1$/;"	v	class:BCIConnDataBuffer
 GraphFrame	plotting/data_plotter.py	/^class GraphFrame(wx.Frame):$/;"	c
 GraphFrame	plotting/example.py	/^class GraphFrame(wx.Frame):$/;"	c
-IDLE	acqui/tasks.py	/^	IDLE=0;$/;"	v	class:Loop
+IDLE	acqui/tasks.py	/^    IDLE=0;$/;"	v	class:Loop
 IDLE	data/writer.py	/^	IDLE=0$/;"	v	class:DataWriter
+IDLE	matlab.py	/^    IDLE=0$/;"	v	class:BCIConnDataBuffer
 LEFT	acqui/clazz.py	/^	LEFT=1$/;"	v	class:Clazz
 Loop	acqui/tasks.py	/^class Loop:$/;"	c
+MATLAB_STR	matlab.py	/^    MATLAB_STR="matlab -nojvm -nodisplay"$/;"	v	class:BCIConn
+MatlabSession	matlab.py	/^from pymatlab.matlab import MatlabSession$/;"	i
 MessageAction	acqui/actions.py	/^class MessageAction(Action):$/;"	c
 NavigationToolbar	plotting/example.py	/^    NavigationToolbar2WxAgg as NavigationToolbar$/;"	i
 RIGHT	acqui/clazz.py	/^	RIGHT=2$/;"	v	class:Clazz
-RUNNING	acqui/tasks.py	/^	RUNNING=1;$/;"	v	class:Loop
+RUNNING	acqui/tasks.py	/^    RUNNING=1;$/;"	v	class:Loop
 RandomClassPool	acqui/clazz.py	/^class RandomClassPool (ClassPool):$/;"	c
 RangedDurationProvider	acqui/launcher.py	/^class RangedDurationProvider(object):$/;"	c
+START_TRIAL	matlab.py	/^    START_TRIAL="brainz.startTrial()"$/;"	v	class:BCIConn
 Scheduler	acqui/tasks.py	/^class Scheduler:$/;"	c
 SoundAction	acqui/actions.py	/^class SoundAction(Action):$/;"	c
 Task	acqui/tasks.py	/^class Task:$/;"	c
@@ -86,9 +106,9 @@ __init__	acqui/clazz.py	/^	def __init__(self,screen,clazz,radious,mesgWriter):$/
 __init__	acqui/launcher.py	/^	def __init__(self,cnf,dataWriter):$/;"	m	class:AcquiLauncher
 __init__	acqui/launcher.py	/^	def __init__(self,duration):$/;"	m	class:DurationProvider
 __init__	acqui/launcher.py	/^	def __init__(self,limits):$/;"	m	class:RangedDurationProvider
-__init__	acqui/tasks.py	/^	def __init__(self):$/;"	m	class:Scheduler
-__init__	acqui/tasks.py	/^	def __init__(self,durationProvider):$/;"	m	class:Task
-__init__	acqui/tasks.py	/^	def __init__(self,schedulerRunning,schedulerIdle):$/;"	m	class:Loop
+__init__	acqui/tasks.py	/^    def __init__(self):$/;"	m	class:Scheduler
+__init__	acqui/tasks.py	/^    def __init__(self,durationProvider):$/;"	m	class:Task
+__init__	acqui/tasks.py	/^    def __init__(self,schedulerRunning,schedulerIdle):$/;"	m	class:Loop
 __init__	conn/biosemi.py	/^	def __init__(self, arrayLen, nChannels, samplesPerChan):$/;"	m	class:DataBuilder
 __init__	conn/biosemi.py	/^	def __init__(self, host,port,dataBuilder):$/;"	m	class:BiosemiClient
 __init__	conn/biosemi.py	/^ 	def __init__(self, eventBus,cli):$/;"	m	class:DataPoster
@@ -102,6 +122,8 @@ __init__	data/writer.py	/^	def __init__(self, basePath,data,label):$/;"	m	class:
 __init__	data/writer.py	/^	def __init__(self, function):$/;"	m	class:AnonymousThread
 __init__	data/writer.py	/^	def __init__(self,mDataAppender):$/;"	m	class:DataWriter
 __init__	data/writer.py	/^	def __init__(self,path,length):$/;"	m	class:DataAppender
+__init__	matlab.py	/^    def __init__(self,bciConn):$/;"	m	class:BCIConnDataBuffer
+__init__	matlab.py	/^    def __init__(self,user):$/;"	m	class:BCIConn
 __init__	plotting/data_plotter.py	/^	def __init__(self,buff):$/;"	m	class:DataPlotter
 __init__	plotting/data_plotter.py	/^    def __init__(self,buff):$/;"	m	class:GraphFrame
 __init__	plotting/example.py	/^    def __init__(self):$/;"	m	class:GraphFrame
@@ -112,17 +134,21 @@ acqui	acqui/launcher.py	/^import acqui.actions as actions$/;"	i
 acqui	acqui/launcher.py	/^import acqui.clazz as clazz$/;"	i
 acqui	acqui/launcher.py	/^import acqui.tasks as tasks$/;"	i
 actions	acqui/launcher.py	/^import acqui.actions as actions$/;"	i
-addAction	acqui/tasks.py	/^	def addAction(self,action):$/;"	m	class:Task
-addTask	acqui/tasks.py	/^	def addTask(self,task):$/;"	m	class:Scheduler
+addAction	acqui/tasks.py	/^    def addAction(self,action):$/;"	m	class:Task
+addTask	acqui/tasks.py	/^    def addTask(self,task):$/;"	m	class:Scheduler
 app	plotting/example.py	/^    app = wx.PySimpleApp()$/;"	v
 append	data/writer.py	/^	def append(self, dataChunk):$/;"	m	class:DataAppender
+append	matlab.py	/^    def append(self, data):$/;"	m	class:BCIConn
 appender_func	data/writer.py	/^def appender_func(path,buff,label):$/;"	f
 background	acqui/main.py	/^import  pygame,background,tasks,clazz,loop$/;"	i
+bciConn	brainz.py	/^bciConn=BCIConn(int(user))$/;"	v
+bciConnBuffer	brainz.py	/^bciConnBuffer=BCIConnDataBuffer(int(user))$/;"	v
 bg	acqui/main.py	/^bg=background.BackgroundAction((255,255,255),screen)$/;"	v
+bioConn	brainz.py	/^bioConn = BiosemiClient(cnf['host'],cnf['port'],dataBuilder)$/;"	v
 bioConn	dataShower.py	/^bioConn = BiosemiClient(cnf['host'],cnf['port'],dataBuilder)$/;"	v
 bit2float	conn/biosemi.py	/^	def bit2float(self, array):$/;"	m	class:DataBuilder
 build	conn/biosemi.py	/^	def build(self, array):$/;"	m	class:DataBuilder
-changeContext	acqui/tasks.py	/^	def changeContext(self):$/;"	m	class:Scheduler
+changeContext	acqui/tasks.py	/^            def changeContext(self):$/;"	f	function:Scheduler.reset
 clazz	acqui/clazz.py	/^	def clazz():$/;"	m	class:ClazzPainter
 clazz	acqui/launcher.py	/^import acqui.clazz as clazz$/;"	i
 clazz	acqui/main.py	/^import  pygame,background,tasks,clazz,loop$/;"	i
@@ -133,7 +159,9 @@ clazzRight	acqui/main.py	/^clazzRight=clazz.Clazz(clazz.Clazz.RIGHT,"Ringht hand
 clazzUp	acqui/main.py	/^clazzUp=clazz.Clazz(clazz.Clazz.UP,"Tongue")$/;"	v
 clear	data/writer.py	/^	def clear(self):$/;"	m	class:DataPath
 close	conn/biosemi.py	/^	def close(self):$/;"	m	class:BiosemiClient
+close	matlab.py	/^    def close(self  ):$/;"	m	class:BCIConn
 cnf	acqui/main.py	/^cnf=yaml.load(file(path,"r"))$/;"	v
+cnf	brainz.py	/^cnf = yaml.load(file(path,"r"))$/;"	v
 cnf	dataShower.py	/^cnf = yaml.load(file(path,"r"))$/;"	v
 create_main_panel	plotting/data_plotter.py	/^    def create_main_panel(self):$/;"	m	class:GraphFrame
 create_main_panel	plotting/example.py	/^    def create_main_panel(self):$/;"	m	class:GraphFrame
@@ -143,21 +171,28 @@ create_status_bar	plotting/example.py	/^    def create_status_bar(self):$/;"	m	c
 cross	acqui/main.py	/^cross=background.CrossAction("imgs\/cross.png",screen)$/;"	v
 current	acqui/clazz.py	/^	def current(self):$/;"	m	class:ClassPool
 dBuff	dataShower.py	/^dBuff = DataBuffer(cnf['channels'],cnf['fs']*8,subsampling = 1)$/;"	v
+dBus	brainz.py	/^dBus = DataBus()$/;"	v
 dBus	dataShower.py	/^dBus = DataBus()$/;"	v
+dPoster	brainz.py	/^dPoster = DataPoster(dBus,bioConn)$/;"	v
 dPoster	dataShower.py	/^dPoster = DataPoster(dBus,bioConn)$/;"	v
 data	data/DataWriterTest.py	/^import data.writer $/;"	i
 data	data/writer.py	/^	def data():$/;"	m	class:DataPath
 data	testRunner.py	/^import data.DataBufferTest$/;"	i
 data	testRunner.py	/^import data.DataWriterTest$/;"	i
+dataAppender	brainz.py	/^dataAppender = DataAppender(path,trialDur)$/;"	v
 dataAppender	dataShower.py	/^dataAppender = DataAppender(path,trialDur)$/;"	v
+dataBuilder	brainz.py	/^dataBuilder = DataBuilder(cnf['tcpLen'],cnf['channels'], cnf['samples'])$/;"	v
 dataBuilder	dataShower.py	/^dataBuilder = DataBuilder(cnf['tcpLen'],cnf['channels'], cnf['samples'])$/;"	v
+dataWriter	brainz.py	/^dataWriter = DataWriter(dataAppender)$/;"	v
 dataWriter	dataShower.py	/^dataWriter = DataWriter(dataAppender)$/;"	v
 data_plotter	dataShower.py	/^import plotting.data_plotter$/;"	i
 datetime	data/writer.py	/^import datetime$/;"	i
+datetime	matlab.py	/^import datetime$/;"	i
 datetime	plotting/data_plotter.py	/^import datetime$/;"	i
 draw_plot	plotting/data_plotter.py	/^    def draw_plot(self):$/;"	m	class:GraphFrame
 draw_plot	plotting/example.py	/^    def draw_plot(self):$/;"	m	class:GraphFrame
 duration_provider_factory	acqui/launcher.py	/^def duration_provider_factory(duration):$/;"	f
+endTrial	matlab.py	/^    def endTrial(self):$/;"	m	class:BCIConn
 fget	acqui/clazz.py	/^		def fget(self):$/;"	f	function:Clazz.mark
 fget	acqui/clazz.py	/^		def fget(self):$/;"	f	function:ClazzPainter.clazz
 fget	data/writer.py	/^		def fget(self):$/;"	f	function:DataPath.data
@@ -165,6 +200,7 @@ fget	data/writer.py	/^		def fget(self):$/;"	f	function:DataPath.label
 flash_status_message	plotting/data_plotter.py	/^    def flash_status_message(self, msg, flash_len_ms=1500):$/;"	m	class:GraphFrame
 flash_status_message	plotting/example.py	/^    def flash_status_message(self, msg, flash_len_ms=1500):$/;"	m	class:GraphFrame
 formatter	acqui/main.py	/^formatter = logging.Formatter("[%(name)s] - %(levelname)s - %(message)s")$/;"	v
+formatter	brainz.py	/^formatter = logging.Formatter("[%(name)s] - %(levelname)s - %(message)s")$/;"	v
 formatter	dataShower.py	/^formatter = logging.Formatter("[%(name)s] - %(levelname)s - %(message)s")$/;"	v
 func_notif	data/bus.py	/^def func_notif(listener,data):$/;"	f
 get	acqui/launcher.py	/^	def get(self):$/;"	m	class:DurationProvider
@@ -172,9 +208,11 @@ get	acqui/launcher.py	/^	def get(self):$/;"	m	class:RangedDurationProvider
 getArrayLen	conn/biosemi.py	/^	def getArrayLen(self):$/;"	m	class:DataBuilder
 getBuff	data/bus.py	/^	def getBuff(self):$/;"	m	class:DataBuffer
 getChunk	conn/biosemi.py	/^	def getChunk(self):$/;"	m	class:BiosemiClient
-getDuration	acqui/tasks.py	/^	def getDuration(self):$/;"	m	class:Task
+getDuration	acqui/tasks.py	/^        def getDuration(self):$/;"	f	function:Task.__init__
 hand	acqui/main.py	/^hand =  logging.StreamHandler()$/;"	v
+hand	brainz.py	/^hand = logging.StreamHandler()$/;"	v
 hand	dataShower.py	/^hand = logging.StreamHandler()$/;"	v
+hand2	brainz.py	/^hand2 = logging.FileHandler("brainz.txt", mode='a', encoding=None, delay=False)$/;"	v
 hand2	dataShower.py	/^hand2 = logging.FileHandler("log.txt", mode='a', encoding=None, delay=False)$/;"	v
 init	conn/biosemi.py	/^	def init(self):$/;"	m	class:BiosemiClient
 init_plot	plotting/data_plotter.py	/^    def init_plot(self):$/;"	m	class:GraphFrame
@@ -185,19 +223,22 @@ is_auto	plotting/example.py	/^    def is_auto(self):$/;"	m	class:BoundControlBox
 l	dataShower.py	/^l = AcquiLauncher(cnf,dataWriter)$/;"	v
 label	data/writer.py	/^	def label():$/;"	m	class:DataPath
 logger	acqui/main.py	/^logger = logging.getLogger("logger")$/;"	v
+logger	brainz.py	/^logger = logging.getLogger("logger")$/;"	v
 logger	dataShower.py	/^logger = logging.getLogger("logger")$/;"	v
 logging	acqui/actions.py	/^import pygame,logging$/;"	i
 logging	acqui/clazz.py	/^import logging $/;"	i
 logging	acqui/launcher.py	/^import logging$/;"	i
 logging	acqui/main.py	/^import logging,yaml$/;"	i
-logging	acqui/tasks.py	/^import logging $/;"	i
+logging	acqui/tasks.py	/^import logging$/;"	i
+logging	brainz.py	/^import logging$/;"	i
 logging	conn/biosemi.py	/^import logging$/;"	i
 logging	data/bus.py	/^import logging$/;"	i
 logging	data/writer.py	/^import logging$/;"	i
 logging	dataShower.py	/^import logging$/;"	i
+logging	matlab.py	/^import logging$/;"	i
 logging	plotting/data_plotter.py	/^import logging$/;"	i
 loop	acqui/main.py	/^import  pygame,background,tasks,clazz,loop$/;"	i
-loop	acqui/tasks.py	/^	def loop(self):$/;"	m	class:Loop
+loop	acqui/tasks.py	/^    def loop(self):$/;"	m	class:Loop
 manual_value	plotting/example.py	/^    def manual_value(self):$/;"	m	class:BoundControlBox
 map_script	acqui/launcher.py	/^def map_script(ch):$/;"	f
 map_script	acqui/main.py	/^def map_script(ch):$/;"	f
@@ -211,6 +252,7 @@ next	acqui/clazz.py	/^	def next(self):$/;"	m	class:ClassPool
 next	plotting/example.py	/^    def next(self):$/;"	m	class:DataGen
 notify	data/bus.py	/^	def notify(self,dataChunk):$/;"	m	class:DataBuffer
 notify	data/writer.py	/^	def notify(self,dataChunk):$/;"	m	class:DataWriter
+notify	matlab.py	/^    def notify(self,dataChunk):$/;"	m	class:BCIConnDataBuffer
 np	conn/biosemi.py	/^import numpy as np$/;"	i
 np	data/DataBufferTest.py	/^import numpy as np$/;"	i
 np	data/DataWriterTest.py	/^import numpy as np$/;"	i
@@ -219,19 +261,19 @@ np	data/writer.py	/^import numpy as np$/;"	i
 np	plotting/data_plotter.py	/^import numpy as np$/;"	i
 np	plotting/example.py	/^import numpy as np$/;"	i
 onReset	acqui/clazz.py	/^	def onReset(self):$/;"	m	class:ClassAction
-onReset	acqui/tasks.py	/^	def onReset(self):$/;"	m	class:Action
+onReset	acqui/tasks.py	/^    def onReset(self):$/;"	m	class:Task
 onStart	acqui/actions.py	/^	def onStart(self ):$/;"	m	class:DataWriteStartAction
 onStart	acqui/actions.py	/^	def onStart(self):$/;"	m	class:SoundAction
 onStart	acqui/clazz.py	/^	def onStart(self):$/;"	m	class:ClassAction
-onStart	acqui/tasks.py	/^	def onStart(self):$/;"	m	class:Action
+onStart	acqui/tasks.py	/^                        def onStart(self):$/;"	m	class:Task.update.reset.Action
 onStop	acqui/actions.py	/^	def onStop(self):$/;"	m	class:DataWriteStopAction
 onStop	acqui/actions.py	/^	def onStop(self):$/;"	m	class:SoundAction
-onStop	acqui/tasks.py	/^	def onStop(self):$/;"	m	class:Action
+onStop	acqui/tasks.py	/^    def onStop(self):$/;"	m	class:Task
 onUpdate	acqui/actions.py	/^	def onUpdate(self):$/;"	m	class:BackgroundAction
 onUpdate	acqui/actions.py	/^	def onUpdate(self):$/;"	m	class:CrossAction
 onUpdate	acqui/actions.py	/^	def onUpdate(self):$/;"	m	class:MessageAction
 onUpdate	acqui/clazz.py	/^	def onUpdate(self):$/;"	m	class:ClassAction
-onUpdate	acqui/tasks.py	/^	def onUpdate(self):$/;"	m	class:Action
+onUpdate	acqui/tasks.py	/^    def onUpdate(self):$/;"	m	class:Task
 on_cb_grid	plotting/example.py	/^    def on_cb_grid(self, event):$/;"	m	class:GraphFrame
 on_cb_xlab	plotting/example.py	/^    def on_cb_xlab(self, event):$/;"	m	class:GraphFrame
 on_exit	plotting/example.py	/^    def on_exit(self, event):$/;"	m	class:GraphFrame
@@ -245,6 +287,7 @@ on_save_plot	plotting/example.py	/^    def on_save_plot(self, event):$/;"	m	clas
 on_text_enter	plotting/example.py	/^    def on_text_enter(self, event):$/;"	m	class:BoundControlBox
 on_update_manual_text	plotting/example.py	/^    def on_update_manual_text(self, event):$/;"	m	class:BoundControlBox
 on_update_pause_button	plotting/example.py	/^    def on_update_pause_button(self, event):$/;"	m	class:GraphFrame
+os	brainz.py	/^import os$/;"	i
 os	data/DataWriterTest.py	/^import os$/;"	i
 os	data/writer.py	/^import os$/;"	i
 os	dataShower.py	/^import os$/;"	i
@@ -255,6 +298,8 @@ painterLeft	acqui/main.py	/^painterLeft=clazz.ClazzPainter(screen,clazzLeft,"img
 painterRight	acqui/main.py	/^painterRight=clazz.ClazzPainter(screen,clazzRight,"imgs\/class.png",(255,0,0),140,[])$/;"	v
 painterUp	acqui/main.py	/^painterUp=clazz.ClazzPainter(screen,clazzUp,"imgs\/class.png",(255,0,0),140,[])$/;"	v
 path	acqui/main.py	/^path="cnf.yml"$/;"	v
+path	brainz.py	/^path = "brainz.yml"$/;"	v
+path	brainz.py	/^path = DataPath(cnf['outputpath']+os.sep+user,'dx%s.mat','dy%s.mat')$/;"	v
 path	dataShower.py	/^path = "cnf.yml"$/;"	v
 path	dataShower.py	/^path = DataPath(cnf['outputpath']+os.sep+user,'dx%s.mat','dy%s.mat')$/;"	v
 plotter	dataShower.py	/^plotter = plotting.data_plotter.DataPlotter(dBuff)$/;"	v
@@ -275,8 +320,8 @@ random	plotting/example.py	/^import random$/;"	i
 read	conn/biosemi.py	/^	def read(self,lengh):$/;"	m	class:BiosemiClient
 register	data/bus.py	/^	def register(self, listener):$/;"	m	class:DataBus
 reset	acqui/clazz.py	/^	def reset(self):$/;"	m	class:ClassPool
-reset	acqui/tasks.py	/^	def reset(self):$/;"	m	class:Scheduler
-reset	acqui/tasks.py	/^	def reset(self):$/;"	m	class:Task
+reset	acqui/tasks.py	/^            def reset(self):$/;"	f	function:Task.update
+reset	acqui/tasks.py	/^    def reset(self):$/;"	m	class:Scheduler
 run	acqui/launcher.py	/^	def run(self):$/;"	m	class:AcquiLauncher
 run	conn/biosemi.py	/^	def run(self):$/;"	m	class:DataPoster
 run	data/bus.py	/^	def run(self):$/;"	m	class:AnonymousThread
@@ -294,14 +339,19 @@ sio	data/writer.py	/^import scipy.io as sio$/;"	i
 snd	acqui/main.py	/^snd=background.SoundAction(cnf['snd'])$/;"	v
 socket	conn/biosemi.py	/^import socket$/;"	i
 st	plotting/data_plotter.py	/^		st=datetime.datetime.now()$/;"	v	class:GraphFrame
-start	acqui/tasks.py	/^	def start(self):$/;"	m	class:Task
+start	acqui/tasks.py	/^    def start(self):$/;"	m	class:Task
+start	matlab.py	/^    def start(self):$/;"	m	class:BCIConn
+startTrial	matlab.py	/^    def startTrial(self):$/;"	m	class:BCIConn
 startWriting	data/writer.py	/^	def startWriting(self):$/;"	m	class:DataWriter
-stop	acqui/tasks.py	/^	def stop(self):$/;"	m	class:Task
+startWriting	matlab.py	/^    def startWriting(self):$/;"	m	class:BCIConnDataBuffer
+stop	acqui/tasks.py	/^    def stop(self):$/;"	m	class:Task
 stop	conn/biosemi.py	/^	def stop(self):$/;"	m	class:DataPoster
 stopWriting	data/writer.py	/^	def stopWriting(self,mark):$/;"	m	class:DataWriter
+stopWriting	matlab.py	/^    def stopWriting(self,mark):$/;"	m	class:BCIConnDataBuffer
 store	data/writer.py	/^	def store(self,label):$/;"	m	class:DataAppender
 suite	testRunner.py	/^suite=unittest.TestSuite(suiteList)$/;"	v
 suiteList	testRunner.py	/^suiteList=[$/;"	v
+sys	brainz.py	/^import sys$/;"	i
 sys	dataShower.py	/^import sys$/;"	i
 sys	plotting/example.py	/^import sys$/;"	i
 t	plotting/data_plotter.py	/^		t=datetime.datetime.now()-st$/;"	v	class:GraphFrame
@@ -319,15 +369,19 @@ threading	acqui/launcher.py	/^import threading$/;"	i
 threading	conn/biosemi.py	/^import threading$/;"	i
 threading	data/bus.py	/^import threading$/;"	i
 threading	data/writer.py	/^import threading$/;"	i
+threading	matlab.py	/^import threading$/;"	i
 threading	plotting/data_plotter.py	/^import threading$/;"	i
-tick	acqui/tasks.py	/^	def tick(self,millis):$/;"	m	class:Scheduler
+tick	acqui/tasks.py	/^    def tick(self,millis):$/;"	m	class:Scheduler
 title	plotting/data_plotter.py	/^    title = 'EEGdumper viewer' $/;"	v	class:GraphFrame
 title	plotting/example.py	/^    title = 'Demo: dynamic matplotlib graph'$/;"	v	class:GraphFrame
+trialDur	brainz.py	/^trialDur = (cnf['durations']['fixation']+cnf['durations']['class'])\/1000*cnf['fs']$/;"	v
 trialDur	dataShower.py	/^trialDur = (cnf['durations']['fixation']+cnf['durations']['class'])\/1000*cnf['fs']$/;"	v
+trialObservers	brainz.py	/^trialObservers=[bciConnBuffer,dataWriter];$/;"	v
 unittest	data/DataBufferTest.py	/^import unittest$/;"	i
 unittest	data/DataWriterTest.py	/^import unittest$/;"	i
 unittest	testRunner.py	/^import unittest$/;"	i
-update	acqui/tasks.py	/^	def update(self):$/;"	m	class:Task
+update	acqui/tasks.py	/^    def update(self):$/;"	m	class:Task
+user	brainz.py	/^user = sys.argv[1]$/;"	v
 user	dataShower.py	/^user = sys.argv[1]$/;"	v
 writer	data/DataWriterTest.py	/^import data.writer $/;"	i
 wx	plotting/data_plotter.py	/^import wx$/;"	i
@@ -336,6 +390,7 @@ wxversion	plotting/data_plotter.py	/^import wxversion$/;"	i
 wxversion	plotting/example.py	/^import wxversion$/;"	i
 yaml	acqui/clazz.py	/^import yaml$/;"	i
 yaml	acqui/main.py	/^import logging,yaml$/;"	i
+yaml	brainz.py	/^import yaml$/;"	i
 yaml	dataShower.py	/^import yaml$/;"	i
 yaml_tag	acqui/clazz.py	/^	yaml_tag=u'!clazz'$/;"	v	class:Clazz
 ymax	plotting/data_plotter.py	/^			ymax=max([max(self.buff[:,i])])$/;"	v	class:GraphFrame
