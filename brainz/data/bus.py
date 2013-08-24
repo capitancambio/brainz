@@ -24,7 +24,7 @@ class DataBuffer(object):
 	   it's thought to be used in to show the signals
 	   """
 
-	def __init__(self,nChannels,nSamples,subsampling=1):
+	def __init__(self,nChannels,nSamples,subsampling=1,callback=None):
 		super(DataBuffer, self).__init__()
 		self.chans=nChannels
 		self.logger=logging.getLogger("logger")
@@ -33,14 +33,21 @@ class DataBuffer(object):
 		self.subsampling=subsampling
 		self.semaphore=threading.Semaphore()
 		self.buffpos=0
+		self.callback=callback
 		self.buff=np.zeros((self.nSamples,self.chans))
+
+
+	def reset(self):
+		self.buff=np.zeros((self.nSamples,self.chans))
+		self.buffpos=0
 
 	def notify(self,dataChunk):
 		self.semaphore.acquire()
 		mat=dataChunk.matrix[::self.subsampling,:]
 		if mat.shape[0]>self.buff.shape[0]-self.buffpos:
-			self.buff=np.zeros((self.nSamples,self.chans))
-			self.buffpos=0
+			if self.callback!=None:
+				self.callback(self.buff)
+			self.reset()
 		#copy new data to buf
 		self.buff[self.buffpos:self.buffpos+mat.shape[0],:]=mat
 		self.buffpos+=mat.shape[0]

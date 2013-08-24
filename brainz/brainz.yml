@@ -9,8 +9,8 @@ disp:
 trials: 90
 #from actiview
 fs: 256
-channels: 32 
-tcpLen: 192
+channels: 40 
+tcpLen: 240
 samples: 2
 host: localhost
 port: 1778
@@ -18,27 +18,43 @@ port: 1778
 #DOWN=3
 #LEFT=1
 #RIGHT=2
-classes: 
-        - !clazz
-                orientation: 1
-                mesg: Right hand
-                img: imgs/class.png
-                color: !!python/tuple [255,0,0]
-        - !clazz
-                orientation: 2
-                mesg: Left hand
-                img: imgs/class.png
-                color: !!python/tuple [0,255,0]
-        - !clazz
-                orientation: 3
-                mesg: Foot
-                img: imgs/class.png
-                color: !!python/tuple [255,125,0]
+#classes: 
         #- !clazz
-                #orientation: 4
-                #mesg: Tongue 
+                #orientation: 1
+                #mesg: Right hand
+                #img: imgs/class.png
+                #color: !!python/tuple [255,0,0]
+        #- !clazz
+                #orientation: 2
+                #mesg: Left hand
                 #img: imgs/class.png
                 #color: !!python/tuple [0,255,0]
+        #- !clazz
+                #orientation: 3
+                #mesg: Foot
+                #img: imgs/class.png
+                #color: !!python/tuple [255,125,0]
+        ##- !clazz
+                ##orientation: 4
+                ##mesg: Tongue 
+                ##img: imgs/class.png
+                ##color: !!python/tuple [0,255,0]
 
 #storing
 outputpath: /home/javi/bci/brainz_data/
+
+#game 30 trials 
+game:
+        trials: 30  
+        idle_time: 2000 
+        start_gap_time: 2000
+        class_time: 6000
+        stop_time: 1500 
+        bg: !!python/tuple [40,118,40]
+        st: !!python/tuple [105,105,105]
+        arrow: imgs/arrow.png
+        c_walk: !!python/tuple ["imgs/char_1.png","imgs/char_2.png","imgs/char_3.png","imgs/char_4.png","imgs/char_5.png","imgs/char_6.png","imgs/char_7.png","imgs/char_8.png"]
+        c_jump: !!python/tuple ["imgs/jump_1.png","imgs/jump_2.png","imgs/jump_3.png","imgs/jump_4.png","imgs/jump_5.png"]
+        terrain: !!python/tuple ["imgs/terrain_1.png"]
+        goals: !!python/tuple ["imgs/goal_ok.png","imgs/goal_fail.png"]
+        font: "resources/game_over.ttf"
