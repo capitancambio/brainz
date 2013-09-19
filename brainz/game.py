@@ -160,17 +160,17 @@ class GameView(object):
 
 
         def drawStatusBar(self):
-                pygame.draw.rect(self.screen, self.cnf['game']['st'], (0,800,1500,100), 0)
+                pygame.draw.rect(self.screen, self.cnf['game']['st'], (0,0,1500,100), 0)
                 font = pygame.font.Font(self.font, 80)
                 #trials msg
                 surface = font.render("Trials: %i"%len(self.game.trials), True, (10, 10, 10))
                 rect = surface.get_rect()
-                rect.center=(1100,850)
+                rect.center=(1100,50)
                 self.screen.blit(surface, rect)
                 #score
                 surface = font.render("Score: %i"%(self.game.getScore()*100), True, (10, 10, 10))
                 rect = surface.get_rect()
-                rect.center=(1300,850)
+                rect.center=(1300,50)
                 self.screen.blit(surface, rect)
                 #arrows
                 img = pygame.image.load(self.cnf['game']['arrow']).convert_alpha()
@@ -182,12 +182,12 @@ class GameView(object):
                 
 
         def drawStatusBarPrep(self):
-                pygame.draw.rect(self.screen, self.cnf['game']['st'], (0,800,1500,100), 0)
+                pygame.draw.rect(self.screen, self.cnf['game']['st'], (0,0,1500,100), 0)
                 font = pygame.font.Font(self.font, 80)
                 #ready msg
                 surface = font.render("Get ready!", True, (10, 10, 10))
                 rect = surface.get_rect()
-                rect.center=(750,850)
+                rect.center=(750,50)
                 self.screen.blit(surface, rect)
 
 
@@ -208,13 +208,13 @@ class GameView(object):
                 del pixarr
                 rect = img.get_rect()
                 if direct==Game.G_RIGHT:#right
-                        rect.center = (750+100,850) 
+                        rect.center = (750+100,50) 
                 elif direct==Game.G_LEFT:#left
                         img=pygame.transform.rotate(img,180)
-                        rect.center = (750-100,850) 
+                        rect.center = (750-100,50) 
                 else:
                         img=pygame.transform.rotate(img,90)
-                        rect.center = (750,850) 
+                        rect.center = (750,50) 
 
                 self.screen.blit(img,rect)	
 
@@ -265,7 +265,7 @@ class Goal(object):
                                 self.img=self.pics[0].copy()
                                 self.bomb=False
 
-                        self.pos=[750+(self.goal-1)*85,10]
+                        self.pos=[750+(self.goal-1)*85,110]
                         self.stepSize=[0,(700)/self.totalSteps]
                         self.angle=(self.goal-1)*0.16
 
@@ -336,7 +336,7 @@ class Terrain(object):
                img=self.pics[self.step].copy() 
                rect = img.get_rect()
                rect.x= 0
-               rect.y= 0 
+               rect.y= 100 
                screen.blit(img,rect)	
                self.tick+=1
                self.tick=self.tick % self.updateRate
@@ -420,7 +420,7 @@ class Zombie(object):
 
                rect = img.get_rect()
                self.__move()
-               rect.center = (self.curPos,700-yAdj) 
+               rect.center = (self.curPos,800-yAdj) 
                screen.blit(img,rect)	
                self.tick+=1
                self.tick=self.tick % self.updateRate
