@@ -5,7 +5,7 @@ durations:
 snd: imgs/snes.wav
 disp:
         w: 1500
-        h: 900
+        h: 1000
 trials: 90
 #from actiview
 fs: 256
@@ -45,7 +45,7 @@ outputpath: /home/javi/bci/brainz_data/
 
 #game 30 trials 
 game:
-        trials: 30  
+        trials: 3  
         idle_time: 2000 
         start_gap_time: 2000
         class_time: 6000
@@ -53,8 +53,9 @@ game:
         bg: !!python/tuple [40,118,40]
         st: !!python/tuple [105,105,105]
         arrow: imgs/arrow.png
-        c_walk: !!python/tuple ["imgs/char_1.png","imgs/char_2.png","imgs/char_3.png","imgs/char_4.png","imgs/char_5.png","imgs/char_6.png","imgs/char_7.png","imgs/char_8.png"]
-        c_jump: !!python/tuple ["imgs/jump_1.png","imgs/jump_2.png","imgs/jump_3.png","imgs/jump_4.png","imgs/jump_5.png"]
+        arrow_class: imgs/arrow_class.png
+        c_walk: !!python/tuple ["imgs/char_2.png","imgs/char_3.png","imgs/char_4.png","imgs/char_6.png","imgs/char_7.png","imgs/char_8.png"]
+        c_jump: !!python/tuple ["imgs/jump_1.png","imgs/jump_2.png","imgs/jump_3.png","imgs/jump_4.png","imgs/jump_5.png","imgs/jump_6.png"]
         terrain: !!python/tuple ["imgs/terrain_1.png"]
         goals: !!python/tuple ["imgs/goal_ok.png","imgs/goal_fail.png"]
         font: "resources/game_over.ttf"

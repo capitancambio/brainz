@@ -12,9 +12,10 @@ from conn.biosemi import BiosemiClient, DataPoster, DataBuilder
 from data.bus import DataBus
 from data.writer import DataWriter, DataPath, DataAppender
 import launcher
+import sequence_generator
 import globals
-
 # logging
+
 
 logger = logging.getLogger('logger')
 hand = logging.StreamHandler()
@@ -32,6 +33,59 @@ logger.addHandler(hand2)
 
 # globals
 
+class SequenceBciConn(object):
+        """Docstring for SequenceBciConn """
+
+        def __init__(self,sequence):
+                """@todo: to be defined
+
+                :sequence: @todo
+
+                """
+                self._sequence = sequence
+                self._count=-1
+                self._trial=False
+        
+        def start(self):
+                """@todo: Docstring for start
+                :returns: @todo
+
+                """
+                pass
+
+        def close(self):
+                """@todo: Docstring for close
+                :returns: @todo
+
+                """
+                pass
+
+        def startTrial(self):
+                """@todo: Docstring for startTrial
+                :returns: @todo
+
+                """
+                self._count+=1
+                self._trial=True
+
+        def endTrial(self):
+                """@todo: Docstring for endTrial
+                :returns: @todo
+
+                """
+                self._trial=False
+
+        def append(self,data):
+                """@todo: Docstring for append
+                :returns: @todo
+
+                """
+                c=-1
+                if self._trial:
+                        c=self._sequence[self._count]
+                return c
+
+
 def buildBiosemiConn(cnf, dataBuilder):
     """@todo: Docstring for buildBiosemiConn
 
@@ -47,6 +101,7 @@ def buildBiosemiConn(cnf, dataBuilder):
     else:
         bioConn = fake.FakeBioSemi(dataBuilder)
     return bioConn
+
 
 
 def buildBCIConn(user, session):
@@ -113,17 +168,23 @@ globals.BUS.subscribe(DataPoster.DATA_EVENT, dataWriter.notify)
 globals.BUS.subscribe(globals.TRIAL_START_EVENT, dataWriter.startWriting)
 globals.BUS.subscribe(globals.TRIAL_STOP_EVENT, dataWriter.stopWriting)
 logger.info('Data writer registered')
-
+generator=None
+bciConn=None
 ##connection with matlab
+if int(session)<=2:
+        sequence,err=sequence_generator.generate(int(cnf['game']['trials']))
+        generator=launcher.TrainingTrialGenerator(sequence)
+        bciConn=SequenceBciConn(sequence)
+else:
+        generator=launcher.TrialGenerator(int(cnf['game']['trials']))
+        bciConn = buildBCIConn(int(user), int(session))
 
-bciConn = buildBCIConn(int(user), int(session))
 bciConn.start()
 bciConnBuffer = BCIConnDataBuffer(bciConn, cnf['channels'], 64)  # more than 64 assures RT
 globals.BUS.subscribe(DataPoster.DATA_EVENT, bciConnBuffer.notify)
 globals.BUS.subscribe(globals.TRIAL_START_EVENT, bciConnBuffer.startTrial)
 globals.BUS.subscribe(globals.TRIAL_STOP_EVENT, bciConnBuffer.stopTrial)
 logger.info('BCI conn registered')
-
 # test
 #cosa=fake.TrialTicker()
 #cosa.start()
@@ -133,8 +194,9 @@ logger.info('BCI conn registered')
 ##appending and writing data
 
 ##init Brainz!
+brainz=None
+brainz = launcher.BrainzLauncher(cnf,generator)
 
-brainz = launcher.BrainzLauncher(cnf)
 brainz.run()
 logger.info("done running...")
 dPoster.stop()

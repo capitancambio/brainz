@@ -23,6 +23,7 @@ class Game(object):
        self.logger=logging.getLogger("logger")
        self.finished=False
        self.cnf=cnf
+       self.onTrial=False
        self.sound= pygame.mixer.Sound(cnf['snd'])
 
 
@@ -33,6 +34,7 @@ class Game(object):
     def startTrial(self,bus,clazz):
         if not self.finished:
                 self.view.prep=True
+                self.onTrial=True
 
 
     def startLiveClassification(self,bus,clazz):
@@ -51,13 +53,14 @@ class Game(object):
                     goal=Game.G_LEFT
                 elif clazz==2:
                     goal=Game.G_RIGHT
-                
+                print "Class %i goal %i"%(clazz,goal) 
                 self.trials.append(clazz)
                 #update the view
                 self.view.setGoal(goal)
         
     def endTrial(self,bus,clazz):
         if not self.finished:
+                self.onTrial=False
                 #update trials and classification result
                 self.classifications.append(self.currentClassification[-1])
                 #reset goal and the current classificaiton
@@ -98,7 +101,7 @@ class GameView(object):
         def __init__(self,game,screen,cnf):
                 self.cnf=cnf
                 self.game=game
-                self.zombie=Zombie(cnf,5)
+                self.zombie=Zombie(cnf,8)
                 self.terrain=Terrain(cnf,20)
                 self.goal=Goal(cnf,4,self.zombie)
                 self.screen=screen
@@ -107,9 +110,12 @@ class GameView(object):
                 self.state.bgcolor=cnf['game']['bg']
                 self.font=cnf['game']['font']
                 self.prep=False
+                self.clazz=-1
+                self.__load_images()
 
         def setGoal(self,clazz):
                 self.lock.acquire()
+                self.clazz=clazz
                 if clazz==Game.G_JUMP:
                         self.goal.setGoal(self.zombie.pos)
                 elif clazz==Game.G_LEFT:
@@ -160,61 +166,68 @@ class GameView(object):
 
 
         def drawStatusBar(self):
-                pygame.draw.rect(self.screen, self.cnf['game']['st'], (0,0,1500,100), 0)
+                pygame.draw.rect(self.screen, self.cnf['game']['st'], (0,800,1500,200), 0)
                 font = pygame.font.Font(self.font, 80)
                 #trials msg
                 surface = font.render("Trials: %i"%len(self.game.trials), True, (10, 10, 10))
                 rect = surface.get_rect()
-                rect.center=(1100,50)
+                rect.center=(1100,900)
                 self.screen.blit(surface, rect)
                 #score
                 surface = font.render("Score: %i"%(self.game.getScore()*100), True, (10, 10, 10))
                 rect = surface.get_rect()
-                rect.center=(1300,50)
+                rect.center=(1300,900)
                 self.screen.blit(surface, rect)
                 #arrows
-                img = pygame.image.load(self.cnf['game']['arrow']).convert_alpha()
-                img = pygame.transform.scale(img,(50,50))
-
-                self.drawArrow(1,img.copy())
-                self.drawArrow(2,img.copy())
-                self.drawArrow(3,img.copy())
+                imgs=[self.arrow]*3
+                if self.goal.goal!=None and self.clazz!=None:
+                        imgs[self.clazz-1]=self.arrow_class
+                self.drawArrow(1,imgs[0].copy())
+                self.drawArrow(2,imgs[1].copy())
+                self.drawArrow(3,imgs[2].copy())
                 
+        def __load_images(self):
+                img = pygame.image.load(self.cnf['game']['arrow']).convert_alpha()
+                imgClass=pygame.image.load(self.cnf['game']['arrow_class']).convert_alpha()
+                img = pygame.transform.scale(img,(100,100))
+                imgClass = pygame.transform.scale(imgClass,(120,120))
+                self.arrow=img
+                self.arrow_class=imgClass
+                self.cross=pygame.image.load("imgs/cross.png").convert_alpha()
 
         def drawStatusBarPrep(self):
-                pygame.draw.rect(self.screen, self.cnf['game']['st'], (0,0,1500,100), 0)
+                pygame.draw.rect(self.screen, self.cnf['game']['st'], (0,800,1500,200), 0)
                 font = pygame.font.Font(self.font, 80)
-                #ready msg
-                surface = font.render("Get ready!", True, (10, 10, 10))
-                rect = surface.get_rect()
-                rect.center=(750,50)
-                self.screen.blit(surface, rect)
+                img = self.cross
+                   
+                rect = img.get_rect()
+                rect.center=(750,900-5)
+                self.screen.blit(img, rect)
 
 
 
 
         def drawArrow(self,direct,img):
                 pixarr=pygame.PixelArray(img)
-                red=0
-                green=0
-                #if len(self.game.currentClassification)>0:
-                        #if self.game.currentClassification[-1]==direct:
-                                #red=255
-                #elif len(self.game.classifications)>0 and self.game.classifications[-1]==direct:
-                                #green=255
-
-                pixarr.replace((0,255,0),(red,green,0),distance=0)
+                color=(0,0,0)
+                if len(self.game.currentClassification)>0:
+                        if self.game.currentClassification[-1]==direct:
+                                color=(215,46,46)
+                elif len(self.game.classifications)>0 and self.game.classifications[-1]==direct and not self.game.onTrial:
+                                color=(28,220,28)
+                pixarr.replace((0,255,0),color,distance=0)
                 img=pixarr.surface
                 del pixarr
                 rect = img.get_rect()
+                rect2 = img.copy().get_rect() 
                 if direct==Game.G_RIGHT:#right
-                        rect.center = (750+100,50) 
+                        rect.center = (750+150,900) 
                 elif direct==Game.G_LEFT:#left
                         img=pygame.transform.rotate(img,180)
-                        rect.center = (750-100,50) 
+                        rect.center = (750-150,900) 
                 else:
                         img=pygame.transform.rotate(img,90)
-                        rect.center = (750,50) 
+                        rect.center = (750,900) 
 
                 self.screen.blit(img,rect)	
 
@@ -236,20 +249,23 @@ class Goal(object):
                 self.goal=None
                 self.pos=[0,0]
                 self.updateRate=updateRate
-                self.__load_pics()
                 self.zombie=zombie
-                self.totalSteps=100
-                self.dSize=20./self.totalSteps 
-                self.stepSize=[]
+                self.totalSteps=120
+                self.stepSize=[0,(730.)/self.totalSteps]
                 self.angle=0.0
                 self.bomb=True
                 self.lock=threading.Lock()
+                self.__load_pics()
                 
         def __load_pics(self):
                 imgs=self.cnf['game']['goals'] 
-                for img in imgs:
+                for idx,img in enumerate(imgs):
+                       self.pics.append([])
                        pic=pygame.image.load(img).convert_alpha()
-                       self.pics.append(pic) 
+                       for step in range(self.totalSteps+1):
+                               size=int(20.+step/3)
+                               scaled = pygame.transform.scale(pic.copy(),(size,size))
+                               self.pics[idx].append(scaled) 
 
         def setGoal(self,goal):
                 self.lock.acquire()
@@ -259,15 +275,16 @@ class Goal(object):
                         self.goal=goal
                         self.step=0
                         if goal==self.zombie.pos:
-                                self.img=self.pics[1].copy()
+                                self.img=1
                                 self.bomb=True
+                                iniY=20
                         else:
-                                self.img=self.pics[0].copy()
+                                self.img=0
                                 self.bomb=False
+                                iniY=0
 
-                        self.pos=[750+(self.goal-1)*85,110]
-                        self.stepSize=[0,(700)/self.totalSteps]
-                        self.angle=(self.goal-1)*0.16
+                        self.pos=[750+(self.goal-1)*55,iniY]
+                        self.angle=(self.goal-1)*0.20
 
                 self.lock.release()
 
@@ -285,12 +302,12 @@ class Goal(object):
                if not self.bomb: 
                        self.drawGoal(screen,self.pos,self.angle)
                else:
-                       pos=[750-85,self.pos[1]]
-                       self.drawGoal(screen,pos,-0.16)
+                       pos=[750-55,self.pos[1]]
+                       self.drawGoal(screen,pos,-0.20)
                        pos=[750,self.pos[1]]
                        self.drawGoal(screen,pos,0)
-                       pos=[750+85,self.pos[1]]
-                       self.drawGoal(screen,pos,0.16)
+                       pos=[750+55,self.pos[1]]
+                       self.drawGoal(screen,pos,0.20)
 
 
                if self.step==self.totalSteps:
@@ -301,9 +318,7 @@ class Goal(object):
                self.lock.release()
 
         def drawGoal(self,screen,pos,angle):
-               size=int(20.+self.dSize*self.step)
-               img=self.img 
-               img = pygame.transform.scale(img,(size,size))
+               img = self.pics[self.img][self.step]
                rect = img.get_rect()
                rect.center = (pos[0]+(angle*(pos[1]-10)),pos[1]) 
                screen.blit(img,rect)	
@@ -333,10 +348,10 @@ class Terrain(object):
 
                self.step=self.step % len(self.pics)
 
-               img=self.pics[self.step].copy() 
+               img=self.pics[self.step]#.copy() 
                rect = img.get_rect()
                rect.x= 0
-               rect.y= 100 
+               rect.y= 0 
                screen.blit(img,rect)	
                self.tick+=1
                self.tick=self.tick % self.updateRate
@@ -397,7 +412,7 @@ class Zombie(object):
                 elif self.jump:
                         pass
                         self.jumpStep+=0.065
-                        if self.jumpStep>=len(self.jumpingPics)*2:
+                        if self.jumpStep>=len(self.jumpingPics):
                                 self.jump=False
 
         
@@ -411,16 +426,15 @@ class Zombie(object):
                         img=self.pics[self.step].copy() 
 
                else:
-                       yAdj=5
-
+                       yAdj=4 
                        idx=int(math.floor(self.jumpStep))
-                       if idx>len(self.jumpingPics):
-                               idx=len(self.jumpingPics)-idx%len(self.jumpingPics)
+                       #if idx>len(self.jumpingPics):
+                               #idx=len(self.jumpingPics)-idx%len(self.jumpingPics)
                        img=self.jumpingPics[idx-1].copy() 
 
                rect = img.get_rect()
                self.__move()
-               rect.center = (self.curPos,800-yAdj) 
+               rect.center = (self.curPos,700-yAdj) 
                screen.blit(img,rect)	
                self.tick+=1
                self.tick=self.tick % self.updateRate

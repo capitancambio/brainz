@@ -11,11 +11,6 @@ import globals
 class FakeBioSemi(object):
 
     def __init__(self, dataBuilder):
-        """@todo: Docstring for __init__
-        :returns: @todo
-
-        """
-
         self.dataBuilder = dataBuilder
 
     def init(self):

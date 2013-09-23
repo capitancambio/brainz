@@ -14,11 +14,12 @@ class BrainzLauncher(object):
 
     """Docstring for BrainzLauncher """
 
-    def __init__(self, cnf):
+    def __init__(self, cnf,generator):
         """@todo: to be defined """
 
         self.cnf = cnf
         self.logger = logging.getLogger('logger')
+        self.generator=generator
         self._init_pygame()
         self._init_scheduler()
 
@@ -51,7 +52,7 @@ class BrainzLauncher(object):
         game.setView(view)
         # here goes the the game state and stuff
         gameAction=GameAction(game)
-        generator=TrialGenerator(int(self.cnf['game']['trials']))
+        generator=self.generator
         startTrial=StartTrialAction(generator,globals.BUS,game)
         startClassifiying=StartLiveClassificationAction(generator,game)
         stopTrial=StopTrialAction(generator,globals.BUS)
@@ -161,3 +162,27 @@ class StartLiveClassificationAction(tasks.Action):
 	def onStart(self):
                 self.game.startLiveClassification(None,self.generator.current())
 
+class TrainingTrialGenerator(object):
+        """Docstring for TrialGenerator """
+
+        def __init__(self,sequence):
+                """@todo: to be defined """
+                self.count=-1
+                self.sequence=sequence
+                self.logger=logging.getLogger("logger")
+                self.position=0
+
+        def next(self,position):
+                print len(self.sequence)
+                self.position
+                if self.count==len(self.sequence)-1:
+                        print "END!!!"
+                        return False
+                self.count+=1
+                return self.current() 
+
+        def current(self):
+                print "current"
+                print len(self.sequence)
+                self.logger.debug("count %i class %i",self.count,self.sequence[ self.count ])
+                return self.sequence[ self.count ]
