@@ -1,8 +1,14 @@
 import game
 from random import choice
+from random import shuffle
 
 def generate(maxTrials):
-       return gen_seq(maxTrials,[-1]*maxTrials,[0]*3,[False]*3,1,0)
+        perClass=maxTrials/3
+        seq=[1]*perClass+[2]*perClass+[3]*perClass
+        shuffle(seq)
+        print "Seq : %s"%seq
+        return seq
+        #return gen_seq(maxTrials,[-1]*maxTrials,[0]*3,[False]*3,1,0)
 
 def moveZ(pos,mo):
         if mo == game.Game.G_JUMP:
@@ -24,7 +30,6 @@ def gen_seq(maxTrials,moves,counts,tried,zombiePos,pos):
                         moves[pos]=next+1
                         counts[next]+=1
                         tried=[False]*3
-                        print "Current %s"%moves
                         res,err = gen_seq(maxTrials,moves,counts,tried,moveZ(zombiePos,moves[pos]),pos+1)
                         if not err:
                                 return res,False
@@ -33,8 +38,6 @@ def gen_seq(maxTrials,moves,counts,tried,zombiePos,pos):
 
 def getNext(zombiePos,tried):
         possible=[i for i,x in enumerate(tried) if x == False]
-        print "get next Tried: %s"%tried
-        print "get next pos: %s"%zombiePos
         if len(possible)==0:
                 return -1,[True]*3,True
         elif zombiePos==0:
@@ -50,21 +53,7 @@ def getNext(zombiePos,tried):
                 if len(possible)==0:
                         return -1,[True]*3,True
 
-        print possible
         next=choice(possible) 
-        print "next : %i"%(next+1)
         #raw_input('Pause:')
         tried[next]=True
         return next,tried,False
-
-
-
-
-
-
-seq,err=generate(30)
-print err
-print seq
-print len([i for i,x in enumerate(seq) if x == 1])
-print len([i for i,x in enumerate(seq) if x == 2])
-print len([i for i,x in enumerate(seq) if x == 3])

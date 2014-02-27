@@ -1,88 +1,54 @@
 from pymatlab.matlab import MatlabSession
+from multiprocessing import Process 
+import time
 import datetime
 import logging
 import threading
 import data.bus as bus
+import numpy
+import Pyro4
 import globals
 
-class BCIConn(object):
-    """Connects wit matlab to process the signals and classification"""
 
-    MATLAB_STR="matlab -nojvm -nodisplay "
-    INIT="brainz=Brainz(user,session);brainz.init();"
-    START_TRIAL="brainz.startTrial()"
-    ADD_DATA="c=brainz.addData(data)"
-    END_TRIAL="brainz.endTrial()"
+
+class BCIProxy(object):
+    """Connects wit matlab to process the signals and classification"""
 
 
     def __init__(self,user,session):
         """@todo: to be defined """
-        self.session=None
+        self.bciConn=None
         self.logger=logging.getLogger("logger")
         self.user=user
         self.sessionId=session
-        self.lock=threading.Lock()
-        self.onTrial=False
 
     def start(self):
-        """ inits the session with matlab
-        """
-        self.logger.debug("Starting matlab session %s",BCIConn.MATLAB_STR)
-        self.session = MatlabSession(BCIConn.MATLAB_STR)
-        self.logger.info("Matlab session started")
-        self.session.putvalue('user',self.user)
-        self.session.putvalue('session',self.sessionId)
-        self.session.run(BCIConn.INIT)
-        self.logger.debug("Matlab brainz object init with user %i and session %i",self.user,self.sessionId)
+        nsproxy = Pyro4.naming.locateNS()
+        self.bciConn=Pyro4.Proxy("PYRONAME:bci.conn")
+        print self.bciConn
+        self.bciConn.start(self.user,self.sessionId)
 
-    def close(self  ):
-        """Closes the matlab session
-        """
-        self.session.close()
-        self.logger.info("Matlab session closed")
+    def close(self):
+            self.logger.debug("closing matlab proxy")
+            self.bciConn.close()
 
     def startTrial(self):
-        """Sends the start trial signal to the matlab object
-        """
-        
-        self.lock.acquire();
-        self.logger.debug("Sending new trial")
-        res=self.session.run(BCIConn.START_TRIAL)
-        self.onTrial=True
-	if res!=None:
-        	self.logger.error("Matlab complained %s"%res)
-
-        self.lock.release();
+            self.logger.debug("starting trial")
+            self.bciConn.startTrial()
 
     def endTrial(self):
-        """Sends the start trial signal to the matlab object
-        """
-        self.onTrial=False
-        self.lock.acquire();
-        self.logger.debug("Finish trial")
-        res=self.session.run(BCIConn.END_TRIAL)
-	if res!=None:
-        	self.logger.error("Matlab complained %s"%res)
-        self.lock.release();
+        self.logger.debug("ending trial")
+        self.bciConn.endTrial()
 
     def append(self, data):
-        """sends a matrix of data to matlab to process it
-        :data: 2-D matrix with the data
-        :class: the output of the clasification or nil
-        """
-        if not self.onTrial:
-                return -1
-        self.lock.acquire();
-	#self.logger.debug("Sending data to matlab")
-        self.session.putvalue('data',data)
-        res=self.session.run(BCIConn.ADD_DATA)
-	if res!=None:
-        	self.logger.error("Matlab complained %s"%res)
+        self.logger.debug("sending data")
+        time1=time.time()
+        c=self.bciConn.append(data)
 
-        c=self.session.getvalue('c')
-	self.logger.debug("Data classified as %i",c)
-        self.lock.release();
+        time2=time.time()
+        print "Pyro took: %f"%(time2-time1)
         return c
+    
 
 
 class BCIConnDataBuffer(object):
@@ -112,7 +78,7 @@ class BCIConnDataBuffer(object):
             self.logger.debug("matlab delta time %f"%t)
 
     def retrieve(self,mat):
-            c=self.bciConn.append(mat)
+            c=self.bciConn.append(mat.tolist())
             self.logger.debug("mat data buf emitting class %i"%c)
             globals.BUS.publish(globals.CLASS_EVENT,c)
 	    
@@ -128,3 +94,12 @@ class BCIConnDataBuffer(object):
         self.logger.debug("MATLAB stopTrial(class %i)"%clazz)
         self.bciConn.endTrial()
         self.state=BCIConnDataBuffer.DONE
+
+if __name__=="__main__":
+       proxy= BCIProxy(201,1)
+       proxy.start()
+       proxy.startTrial()
+       proxy.append([])
+       proxy.endTrial()
+       proxy.close()
+

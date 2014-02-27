@@ -16,7 +16,7 @@ class DataWriter(object):
         self.state=DataWriter.IDLE
         self.logger=logging.getLogger("logger")
         self.stTime=0
-        self.sem=threading.Semaphore()
+        self.sem=threading.Lock()
 
     def notify(self,bus,data):
         self.sem.acquire()
@@ -57,11 +57,11 @@ class DataPath(object):
 		except Exception:
 			self.logger.debug("dir %s already exists..."%self.basePath)
 	def clear(self):
-		try:
-			self.logger.debug("Clearing files")
-			os.remove(self._data)
-			os.remove(self._label)
-		except Exception :
+		#try:
+			#self.logger.debug("Clearing files")
+			#os.remove(self._data)
+			#os.remove(self._label)
+		#except Exception :
 			pass
 	@apply
 	def data():
@@ -97,6 +97,7 @@ class DataAppender(object):
 			self.buff=None
 		else:
 			self.logger.debug("in store")
+                        print "data len %ix%i",(self.buff.shape[0],self.buff.shape[1])
 			self.buff=self.buff[:self.length,:]
 			#copy the buff so we wont have any buffer clashes
 			AnonymousThread(appender_func(self.path,np.copy(self.buff),label)).start()
@@ -117,7 +118,6 @@ def appender_func(path,buff,label):
 def matlab_data_helper_append(path,trial,label):
 	#trial to segs,chans,trial number
 	trial=np.transpose(np.array(trial,ndmin=3),axes=[1,2,0])
-	print "heey"
 	label=np.array(label,ndmin=1)
 	if  os.path.exists(path.data):
 		fData= sio.loadmat(path.data)

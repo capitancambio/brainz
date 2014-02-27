@@ -20,6 +20,7 @@ class Game(object):
        self.classifications=[]
        self.currentClassification=[]
        self.view=None
+       self.clazzes=[]
        self.logger=logging.getLogger("logger")
        self.finished=False
        self.cnf=cnf
@@ -45,7 +46,7 @@ class Game(object):
                 self.sound.play()
                 self.logger.debug('play stop!')
 
-
+                
                 #compute the goal having the zombie position+class
                 if clazz==3:#will have to stay in the same lane
                    goal=Game.G_JUMP
@@ -53,7 +54,6 @@ class Game(object):
                     goal=Game.G_LEFT
                 elif clazz==2:
                     goal=Game.G_RIGHT
-                print "Class %i goal %i"%(clazz,goal) 
                 self.trials.append(clazz)
                 #update the view
                 self.view.setGoal(goal)
@@ -65,10 +65,34 @@ class Game(object):
                 self.classifications.append(self.currentClassification[-1])
                 #reset goal and the current classificaiton
                 self.goal=None
+                #if not self.checkStack():
                 self.view.zombie.move(self.currentClassification[-1])
                 self.currentClassification=[]
+
                 #update view
                 self.view.setGoal(None)
+
+    def checkStack(self):
+            """@todo: Docstring for checkStack.
+            :returns: @todo
+
+            """
+            print "check stack"
+            print self.trials[-1]!=self.classifications[-1]
+            #error in the last
+            if  self.trials[-1]!=self.classifications[-1]:
+                   print "HEY0"
+                   #two errors in a row for the last class
+                   if self.view.zombie.pos==2 and self.classifications[-1]==2:
+                           print "HEY1"
+                           self.view.zombie.move(1)
+                           return True
+                                   
+                   elif self.view.zombie.pos==0 and self.classifications[-1]==1:
+                           #move to center
+                           self.view.zombie.move(2)
+                           return True
+            return False
 
     def classEvent(self,buz,clazz):
         #update the current classificaiton 
@@ -129,6 +153,8 @@ class GameView(object):
         def onUpdate(self):
                 #paint
                 #backgound
+
+     #           print "GAME: %s"%threading.currentThread()
                 self.lock.acquire()
                 if self.game.finished:
                         self.showScore()
@@ -250,8 +276,8 @@ class Goal(object):
                 self.pos=[0,0]
                 self.updateRate=updateRate
                 self.zombie=zombie
-                self.totalSteps=120
-                self.stepSize=[0,(730.)/self.totalSteps]
+                self.totalSteps=160
+                self.stepSize=[0,(750.)/self.totalSteps]
                 self.angle=0.0
                 self.bomb=True
                 self.lock=threading.Lock()
@@ -277,11 +303,15 @@ class Goal(object):
                         if goal==self.zombie.pos:
                                 self.img=1
                                 self.bomb=True
-                                iniY=20
+                                iniY=30
+                                self.totalSteps=130
+                                self.stepSize=[0,(700.)/self.totalSteps]
                         else:
                                 self.img=0
                                 self.bomb=False
                                 iniY=0
+                                self.totalSteps=130
+                                self.stepSize=[0,(700.)/self.totalSteps]
 
                         self.pos=[750+(self.goal-1)*55,iniY]
                         self.angle=(self.goal-1)*0.20
@@ -409,6 +439,9 @@ class Zombie(object):
                        self.curPos+=(self.nextPos-self.pos)*5
                        if self.isStill(): 
                                 self.pos=self.nextPos
+                                if self.pos==0 or self.pos==2:
+                                        self.nextPos=1
+
                 elif self.jump:
                         pass
                         self.jumpStep+=0.065

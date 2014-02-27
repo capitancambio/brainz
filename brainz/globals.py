@@ -1,7 +1,7 @@
 from cyrusbus import Bus
 BUS=Bus()
 
-FAKE_IT=True
+FAKE_IT=False
 
 TRIAL_START_EVENT="trial.start"
 TRIAL_STOP_EVENT="trial.stop"

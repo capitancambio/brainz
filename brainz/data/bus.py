@@ -31,7 +31,7 @@ class DataBuffer(object):
 		self.nSamples=nSamples
 		self.chans=nChannels
 		self.subsampling=subsampling
-		self.semaphore=threading.Semaphore()
+		self.lock=threading.Lock()
 		self.buffpos=0
 		self.callback=callback
 		self.buff=np.zeros((self.nSamples,self.chans))
@@ -42,21 +42,21 @@ class DataBuffer(object):
 		self.buffpos=0
 
 	def notify(self,dataChunk):
-		self.semaphore.acquire()
+		self.lock.acquire()
 		mat=dataChunk.matrix[::self.subsampling,:]
+
 		if mat.shape[0]>self.buff.shape[0]-self.buffpos:
-			if self.callback!=None:
-				self.callback(self.buff)
+                        AnonymousThread(func_callback(self.callback,np.copy(self.buff))).start()
 			self.reset()
 		#copy new data to buf
 		self.buff[self.buffpos:self.buffpos+mat.shape[0],:]=mat
 		self.buffpos+=mat.shape[0]
-		self.semaphore.release()
+		self.lock.release()
 
 	def getBuff(self):
-		self.semaphore.acquire()
+		self.lock.acquire()
 		cp=np.copy(self.buff)
-		self.semaphore.release()
+		self.lock.release()
 		return cp
 
 class DataChunk(object):
@@ -69,6 +69,9 @@ class DataChunk(object):
 
 def func_notif(listener,data):
 	return lambda: listener.notify(data)
+
+def func_callback(fun,data):
+	return lambda: fun(data)
 
 class AnonymousThread(threading.Thread):
 	"""docstring for AnonymousThread"""

@@ -7,7 +7,7 @@ import os
 import sys
 import fake
 
-from matlab import BCIConn, BCIConnDataBuffer
+from matlab import BCIProxy, BCIConnDataBuffer
 from conn.biosemi import BiosemiClient, DataPoster, DataBuilder
 from data.bus import DataBus
 from data.writer import DataWriter, DataPath, DataAppender
@@ -114,7 +114,7 @@ def buildBCIConn(user, session):
 
     bciConn = None
     if not globals.FAKE_IT:
-        bciConn = BCIConn(int(user), int(session)-1)
+        bciConn = BCIProxy(int(user), int(session)-1)
     else:
         bciConn = fake.FakeBCIConn()
     return bciConn
@@ -135,7 +135,7 @@ cnf = yaml.load(file(path, 'r'))
 cnf['user']=user
 cnf['session']=session
 
-trialDur = (cnf['durations']['fixation'] + cnf['durations']['class']) / 1000 * cnf['fs']
+trialDur = ((cnf['durations']['fixation'] + cnf['durations']['class']) / 1000 * cnf['fs'])-48
 
 logger.info('Initialising...')
 logger.info('trial duration set to %i' % trialDur)
@@ -171,16 +171,15 @@ logger.info('Data writer registered')
 generator=None
 bciConn=None
 ##connection with matlab
-if int(session)<=2:
-        sequence,err=sequence_generator.generate(int(cnf['game']['trials']))
-        generator=launcher.TrainingTrialGenerator(sequence)
+sequence=sequence_generator.generate(int(cnf['game']['trials']))
+generator=launcher.TrainingTrialGenerator(sequence)
+if int(session)==1:
         bciConn=SequenceBciConn(sequence)
 else:
-        generator=launcher.TrialGenerator(int(cnf['game']['trials']))
         bciConn = buildBCIConn(int(user), int(session))
 
 bciConn.start()
-bciConnBuffer = BCIConnDataBuffer(bciConn, cnf['channels'], 64)  # more than 64 assures RT
+bciConnBuffer = BCIConnDataBuffer(bciConn, cnf['channels'], 128)  # more than 64 assures RT
 globals.BUS.subscribe(DataPoster.DATA_EVENT, bciConnBuffer.notify)
 globals.BUS.subscribe(globals.TRIAL_START_EVENT, bciConnBuffer.startTrial)
 globals.BUS.subscribe(globals.TRIAL_STOP_EVENT, bciConnBuffer.stopTrial)
@@ -194,7 +193,6 @@ logger.info('BCI conn registered')
 ##appending and writing data
 
 ##init Brainz!
-brainz=None
 brainz = launcher.BrainzLauncher(cnf,generator)
 
 brainz.run()

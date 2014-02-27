@@ -173,16 +173,12 @@ class TrainingTrialGenerator(object):
                 self.position=0
 
         def next(self,position):
-                print len(self.sequence)
-                self.position
+                print self.sequence
                 if self.count==len(self.sequence)-1:
-                        print "END!!!"
                         return False
                 self.count+=1
                 return self.current() 
 
         def current(self):
-                print "current"
-                print len(self.sequence)
                 self.logger.debug("count %i class %i",self.count,self.sequence[ self.count ])
                 return self.sequence[ self.count ]

@@ -17,7 +17,7 @@ class FakeBioSemi(object):
         pass
 
     def getChunk(self):
-        time.sleep(0.005)
+        time.sleep(0.1)
         return self.dataBuilder.build('a' * self.dataBuilder.getArrayLen())
 
 
@@ -57,10 +57,8 @@ class FakeBCIConn(object):
         :data: 2-D matrix with the data
         :class: the output of the clasification or nil
         """
-        self.lock.acquire()
-        self.counter += data.shape[0]
-        self.lock.release()
-        return random.choice([1,2,3])
+        print "mecaguen dios"
+        return -1 #random.choice([-1])
 
 
 class TrialTicker(threading.Thread):

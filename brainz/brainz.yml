@@ -45,7 +45,7 @@ outputpath: /home/javi/bci/brainz_data/
 
 #game 30 trials 
 game:
-        trials: 3  
+        trials: 30
         idle_time: 2000 
         start_gap_time: 2000
         class_time: 6000

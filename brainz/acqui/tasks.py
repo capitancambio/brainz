@@ -121,9 +121,11 @@ class Loop:
         clk.tick
         self.schedulerIdle.changeContext()
         running = True
+        t=0
         while running:
                 for event in pygame.event.get():
                         if event.type == pygame.QUIT:
+                            print "got quit..."
                             running = False
                         elif event.type == pygame.KEYDOWN:
                                 self.logger.debug('KEY %s', event.key)
@@ -157,7 +159,8 @@ class Loop:
                         self.nextState = -1
                         self.state = Loop.IDLE
                 if self.state == Loop.RUNNING:
-                        self.schedulerRunning.tick(clk.tick())
+                        millis=clk.tick()
+                        self.schedulerRunning.tick(millis)
                 if self.state == Loop.IDLE:
                         self.schedulerIdle.tick(clk.tick())
                 pygame.display.flip()
