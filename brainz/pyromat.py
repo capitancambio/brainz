@@ -6,19 +6,21 @@ import numpy
 import threading
 import Pyro4
 
-#logger = logging.getLogger('logger')
-#hand = logging.StreamHandler()
+logger = logging.getLogger('logger')
+hand = logging.StreamHandler()
 #hand2 = logging.FileHandler('pyromat.txt', mode='a', encoding=None, delay=False)
-#logger.setLevel(logging.DEBUG)
-#hand.setLevel(logging.DEBUG)
+logger.setLevel(logging.DEBUG)
+hand.setLevel(logging.DEBUG)
 #hand2.setLevel(logging.DEBUG)
 
-#formatter = logging.Formatter('[%(name)s] - %(levelname)s - %(message)s')
-#hand.setFormatter(formatter)
+formatter = logging.Formatter('[%(name)s] - %(levelname)s - %(message)s')
+hand.setFormatter(formatter)
 #hand2.setFormatter(formatter)
-#logger.addHandler(hand)
+logger.addHandler(hand)
 #logger.addHandler(hand2)
 
+Pyro4.config.SERIALIZER = 'pickle'
+Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
 
 class BCIConn(object):
     """Connects wit matlab to process the signals and classification"""
@@ -64,6 +66,7 @@ class BCIConn(object):
         self.logger.debug("Sending new trial")
         res=self.session.run(BCIConn.START_TRIAL)
         self.onTrial=True
+        print "On trial %s"%self.onTrial
 	if res!=None:
         	self.logger.error("Matlab complained %s"%res)
 
@@ -85,11 +88,12 @@ class BCIConn(object):
         :data: 2-D matrix with the data
         :class: the output of the clasification or nil
         """
+	self.logger.debug("Sending data to matlab")
+        print "On trial %s"%self.onTrial
 #        print "MATLAB %s"%threading.currentThread()
         if not self.onTrial:
                 return -1
         #self.lock.acquire();
-	self.logger.debug("Sending data to matlab")
         time1=time.time()
         data=numpy.array(data,dtype=numpy.float64)
         self.session.putvalue('data',data)
@@ -101,6 +105,7 @@ class BCIConn(object):
 
         ##time.sleep(1)
         time2=time.time()
+	self.logger.debug("done")
 	#self.logger.debug("Data classified as %i",c)
         #self.lock.release();
         return int(c)

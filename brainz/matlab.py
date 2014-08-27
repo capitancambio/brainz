@@ -9,6 +9,8 @@ import numpy
 import Pyro4
 import globals
 
+Pyro4.config.SERIALIZER = 'pickle'
+Pyro4.config.SERIALIZERS_ACCEPTED.add('pickle')
 
 
 class BCIProxy(object):
