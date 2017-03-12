@@ -19,26 +19,28 @@ port: 1778
 #LEFT=1
 #RIGHT=2
 classes: 
-        - !clazz
-                orientation: 1
-                mesg: Right hand
-                img: imgs/class.png
-                color: !!python/tuple [255,0,0]
-        - !clazz
-                orientation: 2
-                mesg: Left hand
-                img: imgs/class.png
-                color: !!python/tuple [0,255,0]
-        - !clazz
-                orientation: 3
-                mesg: Foot
-                img: imgs/class.png
-                color: !!python/tuple [255,125,0]
-        #- !clazz
-                #orientation: 4
-                #mesg: Tongue 
-                #img: imgs/class.png
-                #color: !!python/tuple [0,255,0]
+    right: !clazz
+            orientation: 2
+            mesg: Right hand
+            img: imgs/class.png
+            color: !!python/tuple [255,0,0]
+    left: !clazz
+            orientation: 1
+            mesg: Left hand
+            img: imgs/class.png
+            color: !!python/tuple [0,255,0]
+
+    foot: !clazz
+            orientation: 3
+            mesg: Foot
+            img: imgs/class.png
+            color: !!python/tuple [255,125,0]
+
+    tongue: !clazz
+            orientation: 4
+            mesg: Tongue 
+            img: imgs/class.png
+            color: !!python/tuple [0,255,0]
 
 #storing
 outputpath: /home/javi/bci/mydata/
