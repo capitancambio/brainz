@@ -25,7 +25,7 @@ logger.addHandler(hand2)
 
 
 if len(sys.argv) != 2:
-    print "REMEMBER THE USER!!"
+    print "Usage: python dataShower.py USER_NAME"
     raise RuntimeError
 user = sys.argv[1]
 path = "cnf.yml"
