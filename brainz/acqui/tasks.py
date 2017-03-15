@@ -115,37 +115,42 @@ class Loop:
         clk.tick
         self.schedulerIdle.changeContext()
         running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                if event.type == pygame.KEYDOWN:
-                    self.logger.debug("KEY %s", event.key)
-                    if event.key == 27:
+        try:
+            while running:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
                         running = False
-                    if self.state == Loop.IDLE:
-                        self.nextState = Loop.RUNNING
-                    if self.state == Loop.RUNNING:
-                        # self.nextState=Loop.IDLE
-                        pass
+                    if event.type == pygame.KEYDOWN:
+                        self.logger.debug("KEY %s", event.key)
+                        if event.key == 27:
+                            running = False
+                        if self.state == Loop.IDLE:
+                            self.nextState = Loop.RUNNING
+                        if self.state == Loop.RUNNING:
+                            # self.nextState=Loop.IDLE
+                            pass
 
-            if self.nextState == Loop.RUNNING:
-                clk = pygame.time.Clock()
-                clk.tick
-                self.schedulerRunning.reset()
-                self.schedulerRunning.changeContext()
-                self.nextState = -1
-                self.state = Loop.RUNNING
-            if self.nextState == Loop.IDLE:
-                clk = pygame.time.Clock()
-                clk.tick
-                self.schedulerIdle.reset()
-                self.schedulerIdle.changeContext()
-                self.nextState = -1
-                self.state = Loop.IDLE
-            if self.state == Loop.RUNNING:
-                self.schedulerRunning.tick(clk.tick())
-            if self.state == Loop.IDLE:
-                self.schedulerIdle.tick(clk.tick())
+                if self.nextState == Loop.RUNNING:
+                    clk = pygame.time.Clock()
+                    clk.tick
+                    self.schedulerRunning.reset()
+                    self.schedulerRunning.changeContext()
+                    self.nextState = -1
+                    self.state = Loop.RUNNING
+                if self.nextState == Loop.IDLE:
+                    clk = pygame.time.Clock()
+                    clk.tick
+                    self.schedulerIdle.reset()
+                    self.schedulerIdle.changeContext()
+                    self.nextState = -1
+                    self.state = Loop.IDLE
+                if self.state == Loop.RUNNING:
+                    self.schedulerRunning.tick(clk.tick())
+                if self.state == Loop.IDLE:
+                    self.schedulerIdle.tick(clk.tick())
 
-            pygame.display.flip()
+                pygame.display.flip()
+
+        except StopIteration:
+            # well not the cleanest way but this stops the excecution.
+            self.logger.debug("We're done here!")

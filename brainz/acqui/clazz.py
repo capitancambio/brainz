@@ -79,7 +79,7 @@ class ClassPool:
         self.logger = logging.getLogger("logger")
 
     def next(self):
-        if self.it < len(self.script):
+        if self.it < len(self.script) - 1:
             self.it += 1
 
             self.logger.debug("Orientation %i", self.script[
@@ -95,7 +95,7 @@ class ClassPool:
         self.it = -1
 
 
-class RandomClassPool (ClassPool):
+class RandomClassPool(ClassPool):
 
     def __init__(self, clazzPainters, lenght):
         self.logger = logging.getLogger("logger")
@@ -105,7 +105,7 @@ class RandomClassPool (ClassPool):
         script = []
         keys = clazzes.keys()
         # change to make the number of classes even
-        for i in range(1, lenght):
+        for i in range(lenght):
             # script.append(keys[random.randint(0,len(keys)-1)])
             script.append(keys[i % len(keys)])
         random.shuffle(script)
@@ -119,7 +119,7 @@ class ClassAction (Action):
 
     def onStart(self):
         if not self.pool.next():
-            raise RuntimeError
+            raise StopIteration
 
     def onUpdate(self):
         self.pool.current().paint()
